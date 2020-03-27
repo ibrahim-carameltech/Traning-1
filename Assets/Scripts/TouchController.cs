@@ -10,21 +10,14 @@ public class TouchController : MonoBehaviour
     public static event OnMovement onMove;
 
 
-    Vector2 startPosition;
-    Vector2 endPosition;
+    Vector2 _startPosition;
+    Vector2 _endPosition;
 
     [SerializeField]
     [Range(0.0f, 100.0f)]
-    float movePercentage = 20f;
+    float _movePercentage = 20f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
+      void Update()
     {
         if(Input.touchCount > 0)
         {
@@ -32,19 +25,19 @@ public class TouchController : MonoBehaviour
 
             if(touch.phase == TouchPhase.Began)
             {
-                startPosition = touch.position;
+                _startPosition = touch.position;
             }
             else if(touch.phase == TouchPhase.Ended)
             {
-                endPosition = touch.position;
-                float xMoved = endPosition.x - startPosition.x;
-                float yMoved = endPosition.y - startPosition.y;
+                _endPosition = touch.position;
+                float xMoved = _endPosition.x - _startPosition.x;
+                float yMoved = _endPosition.y - _startPosition.y;
                 bool swipedHorizontal = Mathf.Abs(xMoved) > Mathf.Abs(yMoved);
 
                 float distance = Mathf.Sqrt((xMoved * xMoved) + (yMoved * yMoved));
 
-                bool percentageHorizontal = (distance > ((Screen.width / 100) * movePercentage));
-                bool percentageVertical = (distance > ((Screen.height / 100) * movePercentage));
+                bool percentageHorizontal = (distance > ((Screen.width / 100) * _movePercentage));
+                bool percentageVertical = (distance > ((Screen.height / 100) * _movePercentage));
 
                 if(swipedHorizontal && xMoved > 0 && percentageHorizontal && onMove != null)
                 {

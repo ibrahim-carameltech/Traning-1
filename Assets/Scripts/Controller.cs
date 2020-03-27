@@ -6,36 +6,35 @@ using UnityEngine.UI;
 public class Controller : MonoBehaviour
 {
     [SerializeField]
-    float speed = 50f;
+    float _speed = 50f;
 
     void Awake()
     {
-        TouchController.onMove += move;
+        TouchController.onMove += Move;
     }
 
-    void move(TouchController.Direction x)
+    void Move(TouchController.Direction x)
     {
         if(x == TouchController.Direction.Left)
         {
-            transform.Translate(Vector3.left * speed * Time.deltaTime);
+            transform.Translate(Vector3.left * _speed * Time.deltaTime);
         }
         else if(x == TouchController.Direction.Right)
         {
-            transform.Translate(Vector3.right * speed * Time.deltaTime);
+            transform.Translate(Vector3.right * _speed * Time.deltaTime);
         }
         else if(x == TouchController.Direction.Forward)
         {
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            transform.Translate(Vector3.forward * _speed * Time.deltaTime);
         }
         else if(x == TouchController.Direction.Backward)
         {
-            transform.Translate(Vector3.back * speed * Time.deltaTime);
+            transform.Translate(Vector3.back * _speed * Time.deltaTime);
         }
-        Debug.Log("Test " + x);
     }
 
     void OnDestroy()
 	{
-        TouchController.onMove -= move;
+        TouchController.onMove -= Move;
     }
 }
